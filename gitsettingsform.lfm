@@ -2,24 +2,25 @@ object GitSettingsFrm: TGitSettingsFrm
   Left = 582
   Height = 175
   Top = 328
-  Width = 417
+  Width = 434
   Caption = 'GitSettingsFrm'
   ClientHeight = 175
-  ClientWidth = 417
+  ClientWidth = 434
+  OnShow = FormShow
   LCLVersion = '1.7'
   object lblGitExec: TLabel
     Left = 8
-    Height = 15
+    Height = 13
     Top = 11
-    Width = 74
+    Width = 69
     Caption = 'Git executable'
     ParentColor = False
   end
   object edtGitExec: TFileNameEdit
     Left = 88
-    Height = 23
+    Height = 21
     Top = 8
-    Width = 248
+    Width = 219
     FilterIndex = 0
     HideDirectories = False
     ButtonWidth = 23
@@ -28,12 +29,39 @@ object GitSettingsFrm: TGitSettingsFrm
     TabOrder = 0
   end
   object btnSearchGitExec: TButton
-    Left = 336
-    Height = 23
+    Left = 308
+    Height = 21
     Top = 8
-    Width = 75
+    Width = 56
     Caption = 'Search'
     OnClick = btnSearchGitExecClick
     TabOrder = 1
+  end
+  object btnApply: TButton
+    Left = 232
+    Height = 25
+    Top = 136
+    Width = 75
+    Caption = 'Apply'
+    OnClick = btnApplyClick
+    TabOrder = 2
+  end
+  object btnTest: TButton
+    Left = 365
+    Height = 21
+    Top = 8
+    Width = 62
+    Caption = 'Test'
+    OnClick = btnTestClick
+    TabOrder = 3
+  end
+  object btnClose: TButton
+    Left = 320
+    Height = 25
+    Top = 136
+    Width = 75
+    Caption = 'Close'
+    OnClick = btnCloseClick
+    TabOrder = 4
   end
 end

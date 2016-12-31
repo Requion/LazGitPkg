@@ -12,6 +12,8 @@ procedure Register;
 
 implementation
 
+//{$R lazgitpkg_images.res}
+
 uses
   MenuIntf, IDECommands, Dialogs, Controls, GitResStr, GitSettingsForm;
 
