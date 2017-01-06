@@ -1,11 +1,11 @@
-object GitSettingsFrm: TGitSettingsFrm
-  Left = 582
-  Height = 175
-  Top = 328
-  Width = 434
-  Caption = 'GitSettingsFrm'
-  ClientHeight = 175
-  ClientWidth = 434
+object GitCloneFrm: TGitCloneFrm
+  Left = 564
+  Height = 383
+  Top = 286
+  Width = 314
+  Caption = 'GitCloneFrm'
+  ClientHeight = 383
+  ClientWidth = 314
   Icon.Data = {
     7E04000000000100010010100000010020006804000016000000280000001000
     0000200000000100200000000000000400006400000064000000000000000000
@@ -45,94 +45,132 @@ object GitSettingsFrm: TGitSettingsFrm
     0000000000000000000000000000000000000000000000000000000000000000
     0000
   }
-  OnShow = FormShow
   LCLVersion = '1.7'
-  object lblGitExec: TLabel
-    Left = 5
+  object lblRepoUrl: TLabel
+    Left = 8
     Height = 13
-    Top = 4
-    Width = 69
-    Caption = 'Git executable'
+    Top = 8
+    Width = 74
+    Caption = 'Repository URL'
     ParentColor = False
   end
-  object edtGitExec: TFileNameEdit
-    Left = 5
+  object edtRepoUrl: TEdit
+    Left = 8
     Height = 21
-    Top = 18
-    Width = 302
-    FilterIndex = 0
-    HideDirectories = False
-    ButtonWidth = 23
-    NumGlyphs = 1
+    Top = 24
+    Width = 296
     Anchors = [akTop, akLeft, akRight]
-    MaxLength = 0
     TabOrder = 0
   end
-  object btnSearchGitExec: TButton
-    Left = 308
-    Height = 21
-    Top = 18
-    Width = 56
-    Anchors = [akTop, akRight]
-    Caption = 'Search'
-    OnClick = btnSearchGitExecClick
-    TabOrder = 1
-  end
-  object btnApply: TButton
-    Left = 272
-    Height = 25
-    Top = 136
-    Width = 75
-    Caption = 'Apply'
-    OnClick = btnApplyClick
-    TabOrder = 2
-  end
-  object btnTest: TButton
-    Left = 365
-    Height = 21
-    Top = 18
-    Width = 62
-    Anchors = [akTop, akRight]
-    Caption = 'Test'
-    OnClick = btnTestClick
-    TabOrder = 3
-  end
-  object btnClose: TButton
-    Left = 352
-    Height = 25
-    Top = 136
-    Width = 75
-    Caption = 'Close'
-    OnClick = btnCloseClick
-    TabOrder = 4
-  end
-  object lblDefPrjDir: TLabel
-    Left = 5
+  object lblCloneInto: TLabel
+    Left = 8
     Height = 13
-    Top = 48
-    Width = 109
-    Caption = 'Default clone directory'
+    Top = 56
+    Width = 48
+    Caption = 'Clone into'
     ParentColor = False
   end
-  object edtDefPrjDir: TDirectoryEdit
-    Left = 5
+  object rbCloneIntoDef: TRadioButton
+    Left = 8
+    Height = 17
+    Top = 72
+    Width = 107
+    Caption = 'Default project dir'
+    Checked = True
+    OnClick = rbChangeCloneInto
+    TabOrder = 3
+    TabStop = True
+  end
+  object rbCloneIntoCust: TRadioButton
+    Left = 8
+    Height = 17
+    Top = 96
+    Width = 64
+    Caption = 'Directory'
+    OnClick = rbChangeCloneInto
+    TabOrder = 1
+  end
+  object edtCloneDirCust: TDirectoryEdit
+    Left = 26
     Height = 21
-    Top = 64
-    Width = 422
+    Top = 118
+    Width = 278
     ShowHidden = False
     ButtonWidth = 23
     NumGlyphs = 1
     Anchors = [akTop, akLeft, akRight]
+    Enabled = False
     MaxLength = 0
-    TabOrder = 5
-    OnEditingDone = edtDefPrjDirEditingDone
+    TabOrder = 2
   end
-  object chkShowBranchName: TCheckBox
-    Left = 5
-    Height = 17
-    Top = 104
-    Width = 165
-    Caption = 'Show Branch name in IDE Title'
+  object btnClone: TButton
+    Left = 151
+    Height = 25
+    Top = 176
+    Width = 75
+    Anchors = [akTop, akRight]
+    Caption = 'Clone'
+    OnClick = btnCloneClick
+    TabOrder = 4
+  end
+  object btnCancel: TButton
+    Left = 229
+    Height = 25
+    Top = 176
+    Width = 75
+    Anchors = [akTop, akRight]
+    Caption = 'Cancel'
+    OnClick = btnCancelClick
+    TabOrder = 5
+  end
+  object memCloneOutput: TMemo
+    Left = 8
+    Height = 167
+    Top = 208
+    Width = 296
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Color = clBlack
+    Font.Color = clWhite
+    ParentFont = False
+    ScrollBars = ssAutoBoth
     TabOrder = 6
+  end
+  object Label1: TLabel
+    Left = 96
+    Height = 13
+    Top = 152
+    Width = 6
+    Caption = '0'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 162
+    Height = 13
+    Top = 152
+    Width = 31
+    Caption = 'Label2'
+    ParentColor = False
+  end
+  object Edit1: TEdit
+    Left = 186
+    Height = 21
+    Top = 67
+    Width = 80
+    TabOrder = 7
+    Text = 'Edit1'
+  end
+  object Label3: TLabel
+    Left = 232
+    Height = 13
+    Top = 152
+    Width = 31
+    Caption = 'Label3'
+    ParentColor = False
+  end
+  object tmCloneProgress: TTimer
+    Interval = 1
+    OnTimer = tmCloneProgressTimer
+    Left = 16
+    Top = 152
   end
 end

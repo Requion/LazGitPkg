@@ -9,7 +9,7 @@ interface
 
 uses
   LazGitIntf, GitResStr, GitSettingsForm, CustomMsgDialog, GitSettingsManager, 
-  LazarusPackageIntf;
+  GitCloneForm, LazGitGeneral, LazarusPackageIntf;
 
 implementation
 

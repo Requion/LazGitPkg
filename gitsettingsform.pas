@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Dialogs, StdCtrls,
-  EditBtn, process;
+  EditBtn, process, Controls, LazIDEIntf;
 
 type
 
@@ -17,12 +17,16 @@ type
     btnApply: TButton;
     btnTest: TButton;
     btnClose: TButton;
+    chkShowBranchName: TCheckBox;
+    edtDefPrjDir: TDirectoryEdit;
     edtGitExec: TFileNameEdit;
+    lblDefPrjDir: TLabel;
     lblGitExec: TLabel;
     procedure btnApplyClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
     procedure btnSearchGitExecClick(Sender: TObject);
     procedure btnTestClick(Sender: TObject);
+    procedure edtDefPrjDirEditingDone(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
   public
@@ -33,10 +37,6 @@ procedure ShowSettings;
 
 var
   GitSettingsFrm: TGitSettingsFrm;
-
-const
-  cSavingFailed = 'Saving %s failed: %s';
-  cLoadingFailed = 'Loading %s failed: %s';
 
 implementation
 
@@ -93,7 +93,7 @@ begin
     try
       TmpProcess.Executable := edtGitExec.FileName;
       TmpProcess.Parameters.Add('--version');
-      TmpProcess.Options := TmpProcess.Options + [poWaitOnExit, poUsePipes];
+      TmpProcess.Options := TmpProcess.Options + [poWaitOnExit, poUsePipes, poNoConsole];
       TmpProcess.Execute;
       TmpStringlist.LoadFromStream(TmpProcess.Output);
       Information(TmpStringlist.Text);
@@ -106,14 +106,29 @@ begin
     Error('FileError //TODO');
 end;
 
-procedure TGitSettingsFrm.FormShow(Sender: TObject);
+procedure TGitSettingsFrm.edtDefPrjDirEditingDone(Sender: TObject);
 var
-  LoadResult: string;
+  DirName: string;
 begin
-  LoadResult := LoadValue('General/Git/Executable');
+  DirName := (Sender as TDirectoryEdit).Directory;
+  if not DirectoryExists(DirName) then
+  begin
+    if MessageDlg('Directory does not exist', Format(rsDirNotExists, [DirName]),
+      mtConfirmation, mbYesNo, '') = mrYes then
+      CreateDir(DirName)
+    else
+    begin
+      (Sender as TDirectoryEdit).Clear;
+      (Sender as TDirectoryEdit).SetFocus;
+    end;
+  end;
+end;
 
-  if not SameText(LoadResult, '') then
-    edtGitExec.FileName := LoadResult;
+procedure TGitSettingsFrm.FormShow(Sender: TObject);
+begin
+  edtGitExec.FileName := LoadValue(cPathGitExec);
+  edtDefPrjDir.Directory := LoadValue(cPathDefPrjDir);
+  chkShowBranchName.Checked := LoadValue(cPathShowBranch);
 end;
 
 procedure TGitSettingsFrm.btnApplyClick(Sender: TObject);
@@ -121,7 +136,9 @@ var
   Saved: boolean;
 begin
   { TODO -oRequion : think about a better way. But not now because it is 0:40 AM and you are tired }
-  Saved := SaveValue('General/Git/Executable', edtGitExec.FileName);
+  Saved := SaveValue(cPathGitExec, edtGitExec.FileName);
+  Saved := SaveValue(cPathDefPrjDir, edtDefPrjDir.Directory);
+  Saved := SaveValue(cPathShowBranch, chkShowBranchName.Checked);
 
   if Saved then
     Close

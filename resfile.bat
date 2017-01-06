@@ -1,0 +1,1 @@
+C:\fpcupdeluxe\lazarus\tools\lazres.exe lazgitpkg_images.res @lazgitpkg_images_list.txt
