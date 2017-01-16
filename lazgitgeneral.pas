@@ -5,35 +5,42 @@ unit LazGitGeneral;
 interface
 
 uses
-  Classes, SysUtils, Forms, ProjectIntf, GitResStr, GitSettingsManager, process;
+  Classes, SysUtils, Forms, ProjectIntf, GitResStr, GitSettingsManager,
+  process, Dialogs;
 
 type
 
   { TLazGitGeneral }
 
   TLazGitGeneral = class
-    function OnProjectOpened(Sender: TObject; AProject: TLazProject): TModalResult;
+    function GetBranchName(AProjectDir: string): string;
+    function OnProjectOpened(Sender: TObject): TModalResult;
+    function OnProjectBuilding(Sender: TObject): TModalResult;
+    procedure SetIdeTitle(AProjDir: string);
   end;
 
 implementation
 
 { TLazGitGeneral }
 
-function TLazGitGeneral.OnProjectOpened(Sender: TObject;
-  AProject: TLazProject): TModalResult;
+function TLazGitGeneral.GetBranchName(AProjectDir: string): string;
 var
   ShowBranchName: boolean;
   GitExec, GitDir: string;
   TmpProcess: TProcess;
   TmpStringlist: TStringList;
 begin
-  ShowBranchName := LoadValue(cPathShowBranch);
+  Result := '';
+  if SameText(LoadValue(cPathShowBranch), '') then
+    ShowBranchName := False
+  else
+    ShowBranchName := LoadValue(cPathShowBranch);
   if ShowBranchName then
   begin
     GitExec := LoadValue(cPathGitExec);
     if not SameText(GitExec, '') then
     begin
-      GitDir := AProject.Directory + PathDelim + '.git';
+      GitDir := AProjectDir + '.git';
       if DirectoryExists(GitDir) then
       begin
         TmpProcess := TProcess.Create(nil);
@@ -45,12 +52,11 @@ begin
           TmpProcess.Parameters.Add('--name-only');
           TmpProcess.Parameters.Add('HEAD');
 
-          TmpProcess.Options:=[poUsePipes];
+          TmpProcess.Options := [poUsePipes, poNoConsole];
 
           TmpProcess.Execute;
           TmpStringlist.LoadFromStream(TmpProcess.Output);
-          Application.MainForm.Caption :=
-            Application.MainForm.Caption + TmpStringlist.Text;
+          Result := TmpStringlist.Text;
         finally
           TmpProcess.Free;
           TmpStringlist.Free;
@@ -58,6 +64,23 @@ begin
       end;
     end;
   end;
+end;
+
+function TLazGitGeneral.OnProjectOpened(Sender: TObject): TModalResult;
+begin
+  SetIdeTitle(Application.);
+end;
+
+function TLazGitGeneral.OnProjectBuilding(Sender: TObject): TModalResult;
+begin
+    SetIdeTitle(AProject.Directory);
+end;
+
+procedure TLazGitGeneral.SetIdeTitle(AProjDir: string);
+begin
+  if not SameText(GetBranchName(AProjDir), '') then
+    Application.MainForm.Caption :=
+      Application.MainForm.Caption + ' [' + GetBranchName(AProjDir) + ']';
 end;
 
 end.

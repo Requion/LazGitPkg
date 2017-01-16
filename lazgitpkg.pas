@@ -8,8 +8,8 @@ unit LazGitPkg;
 interface
 
 uses
-  LazGitIntf, GitResStr, GitSettingsForm, CustomMsgDialog, GitSettingsManager, 
-  GitCloneForm, LazGitGeneral, LazarusPackageIntf;
+  LazGitIntf, GitResStr, GitSettingsForm, GitSettingsManager, GitCloneForm, 
+  LazGitGeneral, LazarusPackageIntf;
 
 implementation
 

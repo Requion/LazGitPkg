@@ -5,7 +5,7 @@ unit GitSettingsManager;
 interface
 
 uses
-  Classes, SysUtils, LazConfigStorage, BaseIDEIntf, LazIDEIntf;
+  Classes, SysUtils, LazConfigStorage, BaseIDEIntf, LazIDEIntf, Dialogs;
 
 const
   cConfigFileName = 'lazgitconf.xml';

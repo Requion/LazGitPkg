@@ -61,7 +61,9 @@ begin
     nil, nil, CmdGitSettings, 'menu_environment_options');
 
   LazGit := TLazGitGeneral.Create;
-  LazarusIDE.AddHandlerOnProjectOpened(@LazGit.OnProjectOpened);
+  LazarusIDE.AddHandlerOnProjectOpened(@LazGit.OnProjectOpened, True);
+  LazarusIDE.AddHandlerOnProjectBuilding(@LazGit.OnProjectBuilding, True);
+  LazarusIDE.AddHandlerOnProjectBuildingFinished(@LazGit.OnProjectBuilding, True);
 end;
 
 end.

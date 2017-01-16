@@ -128,7 +128,10 @@ procedure TGitSettingsFrm.FormShow(Sender: TObject);
 begin
   edtGitExec.FileName := LoadValue(cPathGitExec);
   edtDefPrjDir.Directory := LoadValue(cPathDefPrjDir);
-  chkShowBranchName.Checked := LoadValue(cPathShowBranch);
+  if SameText(LoadValue(cPathShowBranch), '') then
+    chkShowBranchName.Checked := False
+  else
+    chkShowBranchName.Checked := LoadValue(cPathShowBranch);
 end;
 
 procedure TGitSettingsFrm.btnApplyClick(Sender: TObject);

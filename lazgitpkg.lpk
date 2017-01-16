@@ -12,7 +12,7 @@
       </SearchPaths>
     </CompilerOptions>
     <Version Release="1"/>
-    <Files Count="7">
+    <Files Count="6">
       <Item1>
         <Filename Value="lazgitintf.pas"/>
         <HasRegisterProc Value="True"/>
@@ -27,21 +27,17 @@
         <UnitName Value="gitsettingsform"/>
       </Item3>
       <Item4>
-        <Filename Value="custommsgdialog.pas"/>
-        <UnitName Value="custommsgdialog"/>
-      </Item4>
-      <Item5>
         <Filename Value="gitsettingsmanager.pas"/>
         <UnitName Value="gitsettingsmanager"/>
-      </Item5>
-      <Item6>
+      </Item4>
+      <Item5>
         <Filename Value="gitcloneform.pas"/>
         <UnitName Value="gitcloneform"/>
-      </Item6>
-      <Item7>
+      </Item5>
+      <Item6>
         <Filename Value="lazgitgeneral.pas"/>
         <UnitName Value="lazgitgeneral"/>
-      </Item7>
+      </Item6>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>
